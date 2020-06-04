@@ -1,19 +1,28 @@
  # Tree
 
-+ [Path-sum](#path-sum)
++ [Binary-tree-level-order-traversal](#binary-tree-level-order-traversal)
 
- ## Path sum
+ ## Binary tree level order traversal
 
- https://leetcode.com/problems/path-sum/ 
+ https://leetcode.com/problems/binary-tree-level-order-traversal/ 
 
  ```python
-def hasPathSum(self, root, sum):
-    if not root:
-        return False
-    if not root.left and not root.right:
-        return sum == root.val
+def levelOrder(self, root):
+    result = []
+    return self.level_order_recursive(root, 0, result)
 
-    return (self.hasPathSum(root.left, sum - root.val) or
-            self.hasPathSum(root.right, sum - root.val))
+
+def level_order_recursive(self, root, depth, array):
+    if not root:
+        return
+    if len(array) <= depth:
+        array.append([root.val])
+    else:
+        array[depth].append(root.val)
+
+    self.level_order_recursive(root.left, depth+1, array)
+    self.level_order_recursive(root.right, depth+1, array)
+
+    return array
 
  ```
