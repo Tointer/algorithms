@@ -1,26 +1,21 @@
  # Intervals
 
-+ [Non-overlapping Intervals](#non-overlapping-intervals)
++ [Insert-interval](#insert-interval)
 
-## Non-overlapping Intervals
+ ## Insert-interval
 
- https://leetcode.com/problems/non-overlapping-intervals/ 
+ https://leetcode.com/problems/insert-interval/ 
 
  ```python
-class Solution(object):
-    def eraseOverlapIntervals(self, intervals):
-        if len(intervals) <= 1:
-            return 0
-        
-        intervals.sort(key = lambda x: x[1])
-        
-        prev = intervals[0]
-        erased = 0
-        for interval in intervals[1:]:
-            if interval[0] < prev[1]:
-                erased += 1
-            else:
-                prev = interval
-            
-        return erased
+def insert(self, intervals, newInterval):
+    intervals.append(newInterval)
+    intervals.sort()
+    result = []
+    i = 0
+    while i < len(intervals):
+        if not result or result[-1][1]<intervals[i][0]: result.append(intervals[i])
+        if result[-1][0]<=intervals[i][0]<=result[-1][1]:
+            result[-1][1] = intervals[i][1] if result[-1][1] <= intervals[i][1] else result[-1][1]
+        i+=1
+    return result
  ```
