@@ -1,28 +1,27 @@
  # Tree
 
-+ [Binary-tree-level-order-traversal](#binary-tree-level-order-traversal)
++ [Subtree-of-another-tree](#subtree-of-another-tree)
 
- ## Binary tree level order traversal
+ ## Subtree of another tree
 
- https://leetcode.com/problems/binary-tree-level-order-traversal/ 
+ https://leetcode.com/problems/subtree-of-another-tree/ 
 
  ```python
-def levelOrder(self, root):
-    result = []
-    return self.level_order_recursive(root, 0, result)
+def isSubtree(self, s, t):
+    if not s:
+        return False
+    if self.isSameTree(s, t):
+        return True
+    return (self.isSubtree(s.left, t) or
+            self.isSubtree(s.right, t))
 
 
-def level_order_recursive(self, root, depth, array):
-    if not root:
-        return
-    if len(array) <= depth:
-        array.append([root.val])
-    else:
-        array[depth].append(root.val)
-
-    self.level_order_recursive(root.left, depth+1, array)
-    self.level_order_recursive(root.right, depth+1, array)
-
-    return array
+def isSameTree(self, p, q):
+    if not p and not q:
+        return True
+    return ((p and q) and
+            p.val == q.val and
+            self.isSameTree(p.right, q.right) and
+            self.isSameTree(p.left, q.left))
 
  ```
