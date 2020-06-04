@@ -1,50 +1,45 @@
  # Linked List
 
-+ [Intersection-of-two-linked-lists](#intersection-of-two-linked-lists)
++ [Sort-list](#sort-list)
 
- ## Intersection of two linked lists
+ ## Sort list
 
- https://leetcode.com/problems/intersection-of-two-linked-lists/ 
+ https://leetcode.com/problems/sort-list/ 
 
  ```python
-def getIntersectionNode(self, headA, headB):
-    if not headA:
-        return None
-    if not headB:
-        return None
-    firstCur = headA
-    secondCur = headB
-    firstCount = 0
-    secondCount = 0
+def split_list(self, head):
+    pre, slow, fast = None, head, head
+    while fast and fast.next:
+        pre, slow, fast = slow, slow.next, fast.next.next
+    pre.next = None
+    return head, slow
 
-    while firstCur.next:
-        firstCur = firstCur.next
-        firstCount += 1
 
-    while secondCur.next:
-        secondCur = secondCur.next
-        secondCount += 1
+def merge(self, first, second):
+    if not first or not second:
+        return first or second
+    if first.val > second.val:
+        first, second = second, first
+    head = pre = first
+    first = first.next
+    while first and second:
+        if first.val < second.val:
+            pre.next = first
+            first = first.next
+        else:
+            pre.next = second
+            second = second.next
+        pre = pre.next
+    pre.next = first or second
+    return head
 
-    difference = firstCount - secondCount
-    firstCur = headA
-    secondCur = headB
 
-    if difference < 0:
-        for i in range(-difference):
-            secondCur = secondCur.next
-    else:
-        for i in range(difference):
-            firstCur = firstCur.next
-
-    if firstCur == secondCur:
-        return firstCur
-
-    while firstCur.next:
-        firstCur = firstCur.next
-        secondCur = secondCur.next
-        if firstCur == secondCur:
-            return firstCur
-
-    return None
+def sortList(self, head):
+    if not head or not head.next:
+        return head
+    first, second = self.split_list(head)
+    first, second = self.sortList(first), self.sortList(second)
+    head = self.merge(first, second)
+    return head
 
  ```
