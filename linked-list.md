@@ -1,27 +1,34 @@
  # Linked List
 
-+ [Palindrome-linked-list](#palindrome-linked-list)
++ [Merge-two-sorted-lists](#merge-two-sorted-lists)
 
- ## Palindrome linked list
+ ## Merge two sorted lists
 
- https://leetcode.com/problems/palindrome-linked-list/ 
+ https://leetcode.com/problems/merge-two-sorted-lists/ 
 
  ```python
-def isPalindrome(self, head):
-    if not head:
-        return True
-    return self.isPalindrome_(head, head)
+def mergeTwoLists(self, l1, l2):
+    if not l1:
+        return l2
+    if not l2:
+        return l1
 
-def isPalindrome_(self, moving_node, start_node):
-    comparison = False
-    if moving_node and moving_node.next:
-        comparison = self.isPalindrome_(moving_node.next, start_node)
-        if not comparison:
-            return False
-        comparison = moving_node.val == start_node.next.val
-        start_node.next = start_node.next.next
-        return comparison
-    else:
-        return moving_node.val == start_node.val
+    minTail = l1
+    source = l2
+    if minTail.val > l2.val:
+        minTail = l2
+        source = l1
+    cur = minTail
+
+    while cur.next or source:
+        if source and (cur.next is None or source.val <= cur.next.val):
+            buf = cur.next
+            cur.next = source
+            cur = source
+            source = buf
+        else:
+            cur = cur.next
+
+    return minTail
 
  ```
