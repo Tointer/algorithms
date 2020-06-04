@@ -1,34 +1,26 @@
  # Linked List
 
-+ [Merge-two-sorted-lists](#merge-two-sorted-lists)
++ [Remove-nth-node-from-end-of-list](#remove-nth-node-from-end-of-list)
 
- ## Merge two sorted lists
+ ## Remove nth node from end of list
 
- https://leetcode.com/problems/merge-two-sorted-lists/ 
+ https://leetcode.com/problems/remove-nth-node-from-end-of-list/ 
 
  ```python
-def mergeTwoLists(self, l1, l2):
-    if not l1:
-        return l2
-    if not l2:
-        return l1
+def removeNthFromEnd(self, head, n):
+    if not head.next:
+        return None
+    fastPointer = head
+    latePointer = head
+    for i in range(n):
+        fastPointer = fastPointer.next
+        if not fastPointer:
+            return head.next
+    while(fastPointer.next):
+        fastPointer = fastPointer.next
+        latePointer = latePointer.next
 
-    minTail = l1
-    source = l2
-    if minTail.val > l2.val:
-        minTail = l2
-        source = l1
-    cur = minTail
-
-    while cur.next or source:
-        if source and (cur.next is None or source.val <= cur.next.val):
-            buf = cur.next
-            cur.next = source
-            cur = source
-            source = buf
-        else:
-            cur = cur.next
-
-    return minTail
+    latePointer.next = latePointer.next.next
+    return head
 
  ```
