@@ -1,24 +1,24 @@
  # Tree
 
-+ [Binary-tree-inorder-traversal](#binary-tree-inorder-traversal)
++ [Symmetric-tree](#symmetric-tree)
 
- ## Binary tree inorder traversal
+ ## Symmetric tree
 
- https://leetcode.com/problems/binary-tree-inorder-traversal/ 
+ https://leetcode.com/problems/symmetric-tree/ 
 
  ```python
-def inorderTraversal(self, root):
-    array = []
-    self.inorderTraversalRec(root, array)
-    return array
+def isSymmetric(self, root):
+    return self.check_symmetry(root, root)
 
 
-def inorderTraversalRec(self, node, array):
-    if not node:
-        return
-    self.inorderTraversalRec(node.left, array)
-    array.append(node.val)
-    self.inorderTraversalRec(node.right, array)
+def check_symmetry(self, node1, node2):
+    if not node1 and not node2:
+        return True
+    elif not node1 or not node2:
+        return False
 
+    return (node1.val == node2.val and
+            self.check_symmetry(node1.left, node2.right) and
+            self.check_symmetry(node1.right, node2.left))
 
  ```
