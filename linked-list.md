@@ -1,50 +1,50 @@
  # Linked List
 
-+ [Reorder-list](#reorder-list)
++ [Intersection-of-two-linked-lists](#intersection-of-two-linked-lists)
 
- ## Reorder list
+ ## Intersection of two linked lists
 
- https://leetcode.com/problems/reorder-list/ 
+ https://leetcode.com/problems/intersection-of-two-linked-lists/ 
 
  ```python
-class Solution(object):
-    def reorderList(self, head):
-        if not head:
-            return
-        if not head.next:
-            return
-        firstPartCur = head
-        secondPartCur = self.reverseList(self.middleNode(head))
-        while secondPartCur.next and firstPartCur.next:
-            buf = firstPartCur.next
-            firstPartCur.next = secondPartCur
-            firstPartCur = secondPartCur
-            secondPartCur = buf
+def getIntersectionNode(self, headA, headB):
+    if not headA:
+        return None
+    if not headB:
+        return None
+    firstCur = headA
+    secondCur = headB
+    firstCount = 0
+    secondCount = 0
 
+    while firstCur.next:
+        firstCur = firstCur.next
+        firstCount += 1
 
-    def middleNode(self, head):
-        if not head or not head.next:
-            return head
+    while secondCur.next:
+        secondCur = secondCur.next
+        secondCount += 1
 
-        fast_cur = head
-        slow_cur = head
+    difference = firstCount - secondCount
+    firstCur = headA
+    secondCur = headB
 
-        while fast_cur.next and fast_cur.next.next:
-            fast_cur = fast_cur.next.next
-            slow_cur = slow_cur.next
+    if difference < 0:
+        for i in range(-difference):
+            secondCur = secondCur.next
+    else:
+        for i in range(difference):
+            firstCur = firstCur.next
 
-        if fast_cur.next:
-            return slow_cur.next
-        return slow_cur
+    if firstCur == secondCur:
+        return firstCur
 
+    while firstCur.next:
+        firstCur = firstCur.next
+        secondCur = secondCur.next
+        if firstCur == secondCur:
+            return firstCur
 
-    def reverseList(self, head):
-        if head is None or head.next is None:
-            return head
-
-        endNode = self.reverseList(head.next)
-        head.next.next = head
-        head.next = None
-        return endNode
+    return None
 
  ```
