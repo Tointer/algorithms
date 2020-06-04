@@ -1,33 +1,19 @@
  # Linked List
 
-+ [Linked-list-cycle-II](#linked-list-cycle-ii)
++ [Linked-list-cycle](#linked-list-cycle)
 
- ## Linked list cycle II
+ ## Linked list cycle
 
- https://leetcode.com/problems/linked-list-cycle-ii/ 
+ https://leetcode.com/problems/linked-list-cycle/ 
 
  ```python
-def detectCycle(self, head):
-    if not head or not head.next:
-        return None
-    if head.next == head:
-        return head
-
-    fast = head.next
-    slow = head
-
+def hasCycle(self, head):
+    slow = fast = head
     while fast and fast.next:
-        if fast != slow:
-            slow = slow.next
-            fast = fast.next.next
-        else:
-            slow = head
-            while slow != fast.next:
-                slow = slow.next
-                fast = fast.next
-            return slow
-    return None
-
-
+        slow = slow.next
+        fast = fast.next.next
+        if fast == slow:
+            return True
+    return False
 
  ```
