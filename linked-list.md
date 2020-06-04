@@ -1,18 +1,25 @@
  # Linked List
 
-+ [Reverse-linked-list](#reverse-linked-list)
++ [Middle-of-the-linked-list](#middle-of-the-linked-list)
 
- ## Reverse linked list
+ ## Middle of the linked list
 
- https://leetcode.com/problems/reverse-linked-list/ 
+ https://leetcode.com/problems/middle-of-the-linked-list/ 
 
  ```python
-def reverseList(self, head):
+def middleNode(self, head):
     if not head or not head.next:
         return head
 
-    endNode = self.reverseList(head.next)
-    head.next.next = head
-    head.next = None
-    return endNode
+    fast_cur = head
+    slow_cur = head
+
+    while fast_cur.next and fast_cur.next.next:
+        fast_cur = fast_cur.next.next
+        slow_cur = slow_cur.next
+
+    if fast_cur.next:
+        return slow_cur.next
+    return slow_cur
+
  ```
