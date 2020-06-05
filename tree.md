@@ -1,39 +1,45 @@
  # Tree
 
-+ [Validate-binary-search-tree](#validate-binary-search-tree)
++ [Binary-search-tree-iterator](#binary-search-tree-iterator)
 
- ## Validate binary search tree
+ ## Binary search tree iterator
 
- https://leetcode.com/problems/validate-binary-search-tree/ 
+ https://leetcode.com/problems/binary-search-tree-iterator/ 
 
  ```python
-def isValidBST(self, root):
-    a = self.is_valid_recursive(root)
-    if a is None:
-        return False
-    return True
+class BSTIterator:
+    def __init__(self, root):
+        inorder = self.levelOrder(root)
+        self.flat_list = []
+        for sublist in inorder:
+            for item in sublist:
+                self.flat_list.append(item)
+        self.flat_list.sort()
+        self.i = 0
 
+    def next(self):
+        self.i += 1
+        return self.flat_list[self.i - 1]
 
-def is_valid_recursive(self, root):
-    if not root:
-        return 2147483649, -2147483649
-    if root.left and root.left.val >= root.val:
-        return
-    if root.right and root.right.val <= root.val:
-        return
-    if not root.right and not root.left:
-        return root.val, root.val
+    def hasNext(self):
+        return self.i != len(self.flat_list)
 
-    left = self.is_valid_recursive(root.left)
-    right = self.is_valid_recursive(root.right)
-    if left is None or right is None:
-        return None
-    min1, max1 = left
-    min2, max2 = right
-    if min2 <= root.val:
-        return None
-    if max1 >= root.val:
-        return None
-    return min(min1, min2), max(max1, max2)
-    
+    def levelOrder(self, root):
+        result = []
+        self.level_order_recursive(root, 0, result)
+        return result
+
+    def level_order_recursive(self, root, depth, array):
+        if not root:
+            return
+        if len(array) <= depth:
+            array.append([root.val])
+        else:
+            array[depth].append(root.val)
+
+        self.level_order_recursive(root.left, depth+1, array)
+        self.level_order_recursive(root.right, depth+1, array)
+
+        return array
+
  ```
