@@ -1,37 +1,39 @@
  # Tree
 
-+ [Kth-smallest-element-in-a-bst](#kth-smallest-element-in-a-bst)
++ [Validate-binary-search-tree](#validate-binary-search-tree)
 
- ## Kth smallest element in a bst
+ ## Validate binary search tree
 
- https://leetcode.com/problems/kth-smallest-element-in-a-bst/ 
+ https://leetcode.com/problems/validate-binary-search-tree/ 
 
  ```python
-def kthSmallest(self, root, k):
-    array = []
-    self.kth_smallest_recursive(root, k, array)
-    return array[0]
+def isValidBST(self, root):
+    a = self.is_valid_recursive(root)
+    if a is None:
+        return False
+    return True
 
 
-def kth_smallest_recursive(self, root, k, result):
+def is_valid_recursive(self, root):
     if not root:
-        return k
-    if not root.left and not root.right:
-        if k == 1:
-            result.append(root.val)
-            return None
-        else:
-            return k-1
-    if len(result) == 1:
-        return None
+        return 2147483649, -2147483649
+    if root.left and root.left.val >= root.val:
+        return
+    if root.right and root.right.val <= root.val:
+        return
+    if not root.right and not root.left:
+        return root.val, root.val
 
-    left = self.kth_smallest_recursive(root.left, k, result)
-    if left is None:
+    left = self.is_valid_recursive(root.left)
+    right = self.is_valid_recursive(root.right)
+    if left is None or right is None:
         return None
-    if left == 1:
-        result.append(root.val)
+    min1, max1 = left
+    min2, max2 = right
+    if min2 <= root.val:
         return None
-
-    return self.kth_smallest_recursive(root.right, left-1, result)
-
+    if max1 >= root.val:
+        return None
+    return min(min1, min2), max(max1, max2)
+    
  ```
